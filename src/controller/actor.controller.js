@@ -1,6 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable quote-props */
-/* eslint-disable no-else-return */
 const actorService = require('../services/actor.service')
 const createActorValidation = require('../validation/actor.validation')
 const updateValidation = require('../validation/actorupdate.validation')
@@ -8,8 +5,7 @@ const idValidation = require('../validation/id.validation')
 
 const createActor = async (req, res) => {
 	try {
-	// eslint-disable-next-line no-mixed-spaces-and-tabs
-	 const validatedActor = await createActorValidation.validate(req.body, { abortEarly: false })
+		const validatedActor = await createActorValidation.validate(req.body, { abortEarly: false })
 		const createdActor = await actorService.addActor(validatedActor)
 		if (!createdActor) {
 			return res.status(404).send({ 'message': 'Actor Not Found' })

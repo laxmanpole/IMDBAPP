@@ -1,6 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable no-else-return */
-/* eslint-disable quote-props */
 const producerService = require('../services/producer.service')
 const producerValidation = require('../validation/producer.validation')
 const producerUpadate = require('../validation/actorupdate.validation')

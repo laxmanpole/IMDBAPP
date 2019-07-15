@@ -1,4 +1,3 @@
-/* eslint-disable radix */
 /* eslint-disable consistent-return */
 /* eslint-disable camelcase */
 const { movieModel } = require('../managers/sequelize.manager')

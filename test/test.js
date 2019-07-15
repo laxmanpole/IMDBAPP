@@ -10,7 +10,6 @@ const path = require('path')
 chai.use(chaiHttp)
 // eslint-disable-next-line no-unused-vars
 const should = chai.should()
-let response
 function test() {
 	const testdata = fs.readFileSync(path.join(__dirname, '/test.json'))
 	const testData = JSON.parse(testdata)
@@ -18,6 +17,7 @@ function test() {
 }
 
 describe('Test cases for Actors', () => {
+	let response
 	const testData = test()
 	it('create new Actor by giving valid input', async () => {
 		response = await chai
@@ -36,46 +36,52 @@ describe('Test cases for Actors', () => {
 		response.error.should.not.be.false
 	})
 	it(' To get available Actor by giving valid input', async () => {
+		const { actorId } = testData.valid
 		response = await chai
 			.request(server)
-			.get('/actor/1')
+			.get(`/actor/${actorId}`)
 		response.should.have.status(200)
 		response.error.should.be.false
 	})
 	it(' To get available Actor by giving Invalid input', async () => {
+		const { actorId } = testData.invalid
 		response = await chai
 			.request(server)
-			.get('/actor/20')
+			.get(`/actor/${actorId}`)
 		response.should.have.status(404)
 		response.error.should.not.be.false
 	})
 	it(' To update Actor by giving valid input.', async () => {
+		const { actorId } = testData.valid
 		response = await chai
 			.request(server)
-			.put('/actor/5')
+			.put(`/actor/${actorId}`)
 			.send(testData.updateActor)
 		response.should.have.status(200)
 		response.error.should.be.false
 	})
 	it('To update Actor by giving Invalid input.', async () => {
+		const { actorId } = testData.invalid
 		response = await chai
 			.request(server)
-			.put('/actor/15')
+			.put(`/actor/${actorId}`)
 			.send(testData.updateActor)
 		response.should.have.status(404)
 		response.error.should.not.be.false
 	})
 	it(' To Delete Actor by giving valid input.', async () => {
+		const { actorId } = testData.valid
 		response = await chai
 			.request(server)
-			.delete('/actor/12')
+			.delete(`/actor/${actorId}`)
 		response.should.have.status(200)
 		response.error.should.be.false
 	})
 	it('To Delete Actor by giving Invalid input.', async () => {
+		const { actorId } = testData.invalid
 		response = await chai
 			.request(server)
-			.delete('/actor/18')
+			.delete(`/actor/${actorId}`)
 		response.should.have.status(404)
 		response.error.should.not.be.false
 	})
@@ -89,6 +95,7 @@ describe('Test cases for Actors', () => {
 })
 
 describe('Test cases for Producers', () => {
+	let response
 	const testData = test()
 	it('create new Producer by giving valid input', async () => {
 		response = await chai
@@ -107,46 +114,52 @@ describe('Test cases for Producers', () => {
 		response.error.should.not.be.false
 	})
 	it(' To get available Producer by giving valid input', async () => {
+		const { producerId } = testData.valid
 		response = await chai
 			.request(server)
-			.get('/producer/1')
+			.get(`/producer/${producerId}`)
 		response.should.have.status(200)
 		response.error.should.be.false
 	})
 	it(' To get Producer by giving Invalid input', async () => {
+		const { producerId } = testData.invalid
 		response = await chai
 			.request(server)
-			.get('/producer/15')
+			.get(`/producer/${producerId}`)
 		response.should.have.status(404)
 		response.error.should.not.be.false
 	})
 	it(' To update Producer by giving valid input.', async () => {
+		const { producerId } = testData.valid
 		response = await chai
 			.request(server)
-			.put('/producer/2')
+			.put(`/producer/${producerId}`)
 			.send(testData.updateProducer)
 		response.should.have.status(200)
 		response.error.should.be.false
 	})
 	it(' To update Producer by giving Invalid input.', async () => {
+		const { producerId } = testData.invalid
 		response = await chai
 			.request(server)
-			.put('/producer/15')
+			.put(`/producer/${producerId}`)
 			.send(testData.updateProducer)
 		response.should.have.status(404)
 		response.error.should.not.be.false
 	})
 	it(' To Delete Producer by giving valid input.', async () => {
+		const { producerId } = testData.valid
 		response = await chai
 			.request(server)
-			.delete('/producer/3')
+			.delete(`/producer/${producerId}`)
 		response.should.have.status(200)
 		response.error.should.be.false
 	})
 	it(' To Delete Producer by giving Invalid input.', async () => {
+		const { producerId } = testData.invalid
 		response = await chai
 			.request(server)
-			.delete('/producer/15')
+			.delete(`/producer/${producerId}`)
 		response.should.have.status(404)
 		response.error.should.not.be.false
 	})
@@ -160,6 +173,7 @@ describe('Test cases for Producers', () => {
 })
 
 describe('Test cases for Movies', () => {
+	let response
 	const testData = test()
 	it('create new Movie by giving valid input', async () => {
 		response = await chai
@@ -170,46 +184,52 @@ describe('Test cases for Movies', () => {
 		response.error.should.be.false
 	})
 	it(' To get available Movie by giving valid input', async () => {
+		const { movieId } = testData.valid
 		response = await chai
 			.request(server)
-			.get('/movie/2')
+			.get(`/movie/${movieId}`)
 		response.should.have.status(200)
 		response.error.should.be.false
 	})
 	it(' To get available Movie by giving Invalid input', async () => {
+		const { movieId } = testData.invalid
 		response = await chai
 			.request(server)
-			.get('/movie/18')
+			.get(`/movie/${movieId}`)
 		response.should.have.status(404)
 		response.error.should.not.be.false
 	})
 	it(' To update Movie by giving valid input.', async () => {
+		const { movieId } = testData.valid
 		response = await chai
 			.request(server)
-			.get('/movie/2')
+			.get(`/movie/${movieId}`)
 			.send(testData.updateMovie)
 		response.should.have.status(200)
 		response.error.should.be.false
 	})
 	it(' To update Movie by giving Invalid input.', async () => {
+		const { movieId } = testData.invalid
 		response = await chai
 			.request(server)
-			.get('/movie/25')
+			.get(`/movie/${movieId}`)
 			.send(testData.createMovie)
 		response.should.have.status(404)
 		response.error.should.not.be.false
 	})
 	it(' To Delete movie by giving valid input.', async () => {
+		const { movieId } = testData.valid
 		response = await chai
 			.request(server)
-			.delete('/movie/3')
+			.delete(`/movie/${movieId}`)
 		response.should.have.status(200)
 		response.error.should.be.false
 	})
 	it(' To Delete movie by giving Invalid input.', async () => {
+		const { movieId } = testData.invalid
 		response = await chai
 			.request(server)
-			.delete('/movie/25')
+			.delete(`/movie/${movieId}`)
 		response.should.have.status(404)
 		response.error.should.not.be.false
 	})
@@ -221,118 +241,134 @@ describe('Test cases for Movies', () => {
 		response.error.should.be.false
 	})
 	it(' To update an Actor in movie by giving valid input', async () => {
+		const { movieId, actorId } = testData.valid
 		response = await chai
 			.request(server)
-			.put('/movie/1/actor/1')
+			.put(`/movie/${movieId}/actor/${actorId}`)
 			.send(testData.updateActorMovie)
 		response.should.have.status(200)
 		response.error.should.be.false
 	})
 	it(' To update an Actor in movie by giving Invalid input', async () => {
+		const { movieId, actorId } = testData.invalid
 		response = await chai
 			.request(server)
-			.put('/movie/1/actor/10')
+			.put(`/movie/${movieId}/actor/${actorId}`)
 			.send(testData.updateActorMovie)
 		response.should.have.status(422)
 		response.error.should.not.be.false
 	})
 	it(' To delete an Actor in movie by giving valid input', async () => {
+		const { movieId, actorId } = testData.valid
 		response = await chai
 			.request(server)
-			.delete('/movie/1/actor/2')
+			.delete(`/movie/${movieId}/actor/${actorId}`)
 		response.should.have.status(200)
 		response.error.should.be.false
 	})
 	it(' To delete an Actor in movie by giving Invalid input', async () => {
+		const { movieId, actorId } = testData.invalid
 		response = await chai
 			.request(server)
-			.delete('/movie/1/actor/15')
+			.delete(`/movie/${movieId}/actor/${actorId}`)
 		response.should.have.status(404)
 		response.error.should.not.be.false
 	})
 	it(' To update an Producer in movie by giving valid input', async () => {
+		const { movieId, producerId } = testData.valid
 		response = await chai
 			.request(server)
-			.put('/movie/1/producer/1')
+			.put(`/movie/${movieId}/producer/${producerId}`)
 			.send(testData.updateProducerMovie)
 		response.should.have.status(200)
 		response.error.should.be.false
 	})
 	it(' To update an Producer in movie by giving Invalid input', async () => {
+		const { movieId, producerId } = testData.invalid
 		response = await chai
 			.request(server)
-			.put('/movie/1/producer/15')
+			.put(`/movie/${movieId}/producer/${producerId}`)
 			.send(testData.updateActor)
 		response.should.have.status(422)
 		response.error.should.not.be.false
 	})
 	it(' To delete an Producer in movie by giving valid input', async () => {
+		const { movieId, producerId } = testData.valid
 		response = await chai
 			.request(server)
-			.delete('/movie/2/producer/2')
+			.delete(`/movie/${movieId}/producer/${producerId}`)
 		response.should.have.status(200)
 		response.error.should.be.false
 	})
 	it(' To delete an Producer in movie by giving Invalid input', async () => {
+		const { movieId, producerId } = testData.invalid
 		response = await chai
 			.request(server)
-			.delete('/movie/1/producer/15')
+			.delete(`/movie/${movieId}/producer/${producerId}`)
 		response.should.have.status(404)
 		response.error.should.not.be.false
 	})
 	it(' To get all actors in movie by giving valid ID', async () => {
+		const { movieId } = testData.valid
 		response = await chai
 			.request(server)
-			.get('/movie/1/actors')
+			.get(`/movie/${movieId}/actor`)
 		response.should.have.status(200)
 		response.error.should.be.false
 	})
 	it(' To get all actors in movie by giving Invalid ID', async () => {
+		const { movieId } = testData.invalid
 		response = await chai
 			.request(server)
-			.get('/movie/15/actors')
+			.get(`/movie/${movieId}/actors`)
 		response.should.have.status(404)
 		response.error.should.not.be.false
 	})
 	it(' To get all producers in movie by giving valid ID', async () => {
+		const { movieId } = testData.valid
 		response = await chai
 			.request(server)
-			.get('/movie/1/producers')
+			.get(`/movie/${movieId}/producers`)
 		response.should.have.status(200)
 		response.error.should.be.false
 	})
 	it(' To get all producers in movie by giving Invalid ID', async () => {
+		const { movieId } = testData.invalid
 		response = await chai
 			.request(server)
-			.get('/movie/15/producers')
+			.get(`/movie/${movieId}/producers`)
 		response.should.have.status(404)
 		response.error.should.not.be.false
 	})
 	it(' To get all actors in movie & view count will be change giving valid Id', async () => {
+		const { movieId } = testData.valid
 		response = await chai
 			.request(server)
-			.get('/movie/4/actorList')
+			.get(`/movie/${movieId}/actorList`)
 		response.should.have.status(200)
 		response.error.should.be.false
 	})
 	it('To get all actors in movie & view count will be change giving Invalid Id', async () => {
+		const { movieId } = testData.invalid
 		response = await chai
 			.request(server)
-			.get('/movie/15/actorList')
+			.get(`/movie/${movieId}/actorList`)
 		response.should.have.status(404)
 		response.error.should.not.be.false
 	})
 	it(' To get all producers in movie & view count will be change giving valid Id', async () => {
+		const { movieId } = testData.valid
 		response = await chai
 			.request(server)
-			.get('/movie/1/producerList')
+			.get(`/movie/${movieId}/producerList`)
 		response.should.have.status(200)
 		response.error.should.be.false
 	})
 	it(' To get all producers in movie & view count will be change giving Invalid Id', async () => {
+		const { movieId } = testData.invalid
 		response = await chai
 			.request(server)
-			.get('/movie/15/producerList')
+			.get(`/movie/${movieId}/producerList`)
 		response.should.have.status(404)
 		response.error.should.not.be.false
 	})

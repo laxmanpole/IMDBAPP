@@ -46,6 +46,16 @@
         "sex": "male",
         "dob": "2014-05-05",
         "bio": "efefujbvgj"
+    },
+    "valid":{
+        "actorId":"1",
+        "producerId":"1",
+        "movieId":"1"
+    },
+    "invalid":{
+        "actorId":"20",
+        "producerId":"20",
+        "movieId":"20"
     }
 
 }

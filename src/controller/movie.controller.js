@@ -1,7 +1,4 @@
-/* eslint-disable max-len */
 /* eslint-disable import/order */
-/* eslint-disable consistent-return */
-/* eslint-disable quote-props */
 const movieService = require('../services/movie.service')
 const movieValidation = require('../validation/movie.validation')
 const movieUpdation = require('../validation/movieUpdation')
@@ -16,8 +13,9 @@ const createMovie = async (req, res) => {
 		const createdMovie = await movieService.addMovie(validatedReqData)
 		if (!createdMovie) {
 			return res.status(404).send({ 'message': 'Not Found' })
+		} else {
+			return res.status(200).send({ 'message': 'successfully created' })
 		}
-		return res.status(200).send({ 'message': 'successfully created' })
 	} catch (err) {
 		return res.status(422).send(err.message)
 	}
@@ -32,8 +30,9 @@ const getMovie = async (req, res) => {
 			})
 			if (!movieDetail) {
 				return res.status(404).send({ 'message': 'Not Found' })
+			} else {
+				return res.status(200).send(movieDetail)
 			}
-			return res.status(200).send(movieDetail)
 		}
 	} catch (err) {
 		return res.status(422).send(err.message)
@@ -45,8 +44,9 @@ const getMovies = async (req, res) => {
 		const movieList = await movieService.getMovies({})
 		if (!movieList) {
 			return res.status(404).send({ 'message': 'Not Found' })
+		} else {
+			return res.status(200).send(movieList)
 		}
-		return res.status(200).send(movieList)
 	} catch (err) {
 		return res.status(422).send(err.message)
 	}
@@ -64,8 +64,9 @@ const updateMovie = async (req, res) => {
 			})
 			if (record === 1) {
 				return res.status(200).send({ 'message': 'update successfully' })
+			} else {
+				return res.status(404).send({ 'message': 'Not Found' })
 			}
-			return res.status(404).send({ 'message': 'Not Found' })
 		}
 	} catch (err) {
 		return res.status(422).send(err.message)
@@ -81,8 +82,9 @@ const deleteMovie = async (req, res) => {
 			})
 			if (movieDeleted === 1) {
 				return res.status(200).send({ 'message': 'delete successfully' })
+			} else {
+				return res.status(404).send({ 'message': 'Not Found' })
 			}
-			return res.status(404).send({ 'message': 'Not Found' })
 		}
 	} catch (err) {
 		return res.status(422).send(err.message)
@@ -101,8 +103,9 @@ const updateActor = async (req, res) => {
 			})
 			if (record === 1) {
 				return res.status(200).send({ 'message': 'update successfully' })
+			} else {
+				return res.status(404).send({ 'message': 'Not Found' })
 			}
-			return res.status(404).send({ 'message': 'Not Found' })
 		}
 	} catch (err) {
 		return res.status(422).send(err.message)
@@ -115,8 +118,9 @@ const deleteActor = async (req, res) => {
 			const movieDeleted = await movieService.deleteActor({ movieId, actorId })
 			if (movieDeleted === 1) {
 				return res.status(200).send({ 'message': 'delete successfully' })
+			} else {
+				return res.status(404).send({ 'message': 'Not Found' })
 			}
-			return res.status(404).send({ 'message': 'Not Found' })
 		}
 	} catch (err) {
 		return res.status(422).send(err.message)
@@ -135,8 +139,9 @@ const updateProducer = async (req, res) => {
 			})
 			if (record === 1) {
 				return res.status(200).send({ 'message': 'update successfully' })
+			} else {
+				return res.status(404).send({ 'message': 'Not Found' })
 			}
-			return res.status(404).send({ 'message': 'Not Found' })
 		}
 	} catch (err) {
 		return res.status(422).send(err.message)
@@ -150,8 +155,9 @@ const deleteProducer = async (req, res) => {
 			const producerDeleted = await movieService.deleteProducer({ movieId, producerId })
 			if (producerDeleted === 1) {
 				return res.status(200).send({ 'message': 'delete successfully' })
+			} else {
+				return res.status(404).send({ 'message': 'Not Found' })
 			}
-			return res.status(404).send({ 'message': 'Not Found' })
 		}
 	} catch (err) {
 		return res.status(422).send(err.message)
@@ -216,8 +222,9 @@ const getAsyncMovieActors = (req, res) => {
 		async.parallel(tasks, (err, results) => {
 			if (err) {
 				return res.status(404).send({ 'message': 'movie details not found' })
+			} else {
+				return res.status(200).send(results)
 			}
-			return res.status(200).send(results)
 		})
 	} catch (err) {
 		return res.status(422).send(err.message)
@@ -240,8 +247,9 @@ const getAsyncMovieProducers = (req, res) => {
 		async.parallel(tasks, (err, results) => {
 			if (err) {
 				return res.status(404).send({ 'message': 'movie details not found' })
+			} else {
+				return res.status(200).send(results)
 			}
-			return res.status(200).send(results)
 		})
 	} catch (err) {
 		return res.status(422).send(err.message)

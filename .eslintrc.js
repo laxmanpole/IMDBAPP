@@ -20,7 +20,6 @@ module.exports = {
     "arrowFunctions":true,
     "classes":true,
     "spread":true,
-
   },
   "rules": {
     "indent": [
@@ -48,9 +47,12 @@ module.exports = {
     "no-mixed-spaces-and-tabs": [
         "warn"
     ],
-    'no-else-return': ['warn',
-     { allowElseIf: true }
+    'no-tabs': ["error", { allowIndentationTabs: true }
     ],
-    'no-tabs': ["error", { allowIndentationTabs: true }]
+    'radix': ["error", "as-needed"],
+    "quote-props": ["error", "consistent"],
+    'max-len': 0,
+    'consistent-return': 0,
+    'no-else-return': 0
 }
 };
