@@ -1,0 +1,813 @@
+{
+    "swagger": "2.0",
+    "host": "localhost:3000",
+    "basePath": "/",
+    "tags": [
+        {
+            "name": "actor",
+            "description": ""
+        },
+        {
+            "name": "producer",
+            "description": ""
+        }
+    ],
+    "schemes": [
+        "https",
+        "http"
+    ],
+    "paths": {
+        "/actor": {
+            "post": {
+                "tags": [
+                    "actor"
+                ],
+                "summary": "Add a new actor ",
+                "description": "",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "New actor created",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Actor"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Actor"
+                        }
+                    }
+                }
+            }
+        },
+        "/actor/{id}": {
+            "get": {
+                "tags": [
+                    "actor"
+                ],
+                "summary": "Find actor by ID",
+                "description": "Returns a single actor",
+                "operationId": "id",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of actor to return",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Actor"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "actor not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "actor"
+                ],
+                "summary": "Updated actor",
+                "description": "This can only be done by the logged in user.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "name that need to be updated",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Updated actor",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Actor"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Actor"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "actor not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "actor"
+                ],
+                "summary": "Updated actor",
+                "description": "This can only be done by the logged in user.",
+                "operationId": "id",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "name that need to be updated",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Actor"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "actor not found"
+                    }
+                }
+            }
+        },
+        "/actors": {
+            "get": {
+                "tags": [
+                    "actor"
+                ],
+                "summary": "Find all actors",
+                "description": "Returns a all actors",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "actorId",
+                        "in": "path",
+                        "description": "ID of actor to return",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Actor"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "Actors not found"
+                    }
+                }
+            }
+        },
+        "/producer": {
+            "post": {
+                "tags": [
+                    "producer"
+                ],
+                "summary": "Add a new producer",
+                "description": "",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Producer created",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Producer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Actor"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "producer not found"
+                    }
+                }
+            }
+        },
+        "/producer/{id}": {
+            "get": {
+                "tags": [
+                    "producer"
+                ],
+                "summary": "Find producer by ID",
+                "description": "Returns a single producer",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID ",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Producer"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "producer not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "producer"
+                ],
+                "summary": "Updated Producer",
+                "description": "This can only be done by the logged in user.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "name that need to be updated",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Updated producer object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Producer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Actor"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "actor not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "producer"
+                ],
+                "summary": "Updated producer",
+                "description": "This can only be done by the logged in user.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "name that need to be updated",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Actor"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "actor not found"
+                    }
+                }
+            }
+        },
+        "/producers": {
+            "get": {
+                "tags": [
+                    "producer"
+                ],
+                "summary": "Find Producer",
+                "description": "Returns a all producers",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "producerId",
+                        "in": "path",
+                        "description": "",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Producer"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "producer not found"
+                    }
+                }
+            }
+        },
+        "/movie": {
+            "post": {
+                "tags": [
+                    "movie"
+                ],
+                "summary": "Add a new movie",
+                "description": "",
+                "operationId": "addMovie",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "movie created",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Movie"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Movie"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "actor not found"
+                    }
+                }
+            }
+        },
+        "/movie/{id}": {
+            "get": {
+                "tags": [
+                    "movie"
+                ],
+                "summary": "Find movie by ID",
+                "description": "Returns a single pet",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of movie to return",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Movie"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "Movie not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "movie"
+                ],
+                "summary": "Updated Movie",
+                "description": "This can only be done by the logged in user.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "name that need to be updated",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Updated movie object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Movie"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Movie"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "actor not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "movie"
+                ],
+                "summary": "Updated movie",
+                "description": "This can only be done by the logged in user.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "name that need to be updated",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Movie"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "actor not found"
+                    }
+                }
+            }
+        },
+        "/movies": {
+            "get": {
+                "tags": [
+                    "movie"
+                ],
+                "summary": "Find all movies",
+                "description": "Returns a all movies",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "movie",
+                        "in": "path",
+                        "description": "find all movies",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Movie"
+                        }
+                    },
+                    "400": {
+                        "description": ""
+                    },
+                    "404": {
+                        "description": "Movies not found"
+                    }
+                }
+            }
+        },
+        "/movie/{movieId}/actor/{actorId}": {
+            "put": {
+                "tags": [
+                    "movie"
+                ],
+                "summary": "Updated actor",
+                "description": "update the particular actor.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "movieId",
+                        "in": "path",
+                        "description": "name that need to be updated",
+                        "required": true,
+                        "type": "string"
+                    },{
+                        "name": "actorId",
+                        "in": "path",
+                        "description": "name that need to be updated",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Updated movie object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Actor"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Actor"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "actor not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "movie"
+                ],
+                "summary": "Delete Actor",
+                "description": "This can only be done by the logged in user.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "movieId",
+                        "in": "path",
+                        "description": "name that need to be updated",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "actorId",
+                        "in": "path",
+                        "description": "name that need to be updated",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Actor"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "actor not found"
+                    }
+                }
+            }
+        }, "/movie/{movieId}/producer/{producerId}": {
+            "put": {
+                "tags": [
+                    "movie"
+                ],
+                "summary": "Updated Producer",
+                "description": "This can only be done by the logged in user.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "movieId",
+                        "in": "path",
+                        "description": "name that need to be find",
+                        "required": true,
+                        "type": "string"
+                    },{
+                        "name": "producerId",
+                        "in": "path",
+                        "description": "name that need to be updated",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Updated movie object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Producer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Producer"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "actor not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "movie"
+                ],
+                "summary": "Delete Producer",
+                "description": "This can only be done by the logged in user.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "movieId",
+                        "in": "path",
+                        "description": "name that need to be find",
+                        "required": true,
+                        "type": "string"
+                    },{
+                        "name": "producerId",
+                        "in": "path",
+                        "description": "name that need to be deleted",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Producer"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "actor not found"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Actor": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "sex": {
+                    "type": "string"
+                },
+                "bio": {
+                    "type": "string"
+                },
+                "dob": {
+                    "type": "string"
+                }
+            }
+        },
+        "Producer": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "sex": {
+                    "type": "string"
+                },
+                "bio": {
+                    "type": "string"
+                },
+                "dob": {
+                    "type": "string"
+                }
+            }
+        },
+        "Movie": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "releaseYear": {
+                    "type": "string"
+                },
+                "plot": {
+                    "type": "string"
+                },
+                "poster": {
+                    "type": "string"
+                },
+                "actor_id": {
+                    "type": "string"
+                },
+                "producer_id": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

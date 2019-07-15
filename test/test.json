@@ -1,0 +1,51 @@
+{
+    "createActor":{
+        "name": "Mahesh",
+        "sex": "male",
+        "dob": "2014-05-05",
+        "bio": "efefujbvgj"
+    },
+    "updateActor":{
+        "name": "Shyam",
+        "sex": "male",
+        "dob": "2014-05-05",
+        "bio": "efefujbvgj"
+    },
+    "createProducer":{
+        "name": "Karan",
+        "sex": "male",
+        "dob": "2014-05-05",
+        "bio": "efefujbvgj"
+    },
+    "updateProducer":{
+        "name": "Ram",
+        "sex": "male",
+        "dob": "2014-05-05",
+        "bio": "efefujbvgj"
+    },
+    "createMovie":{
+        "name": "Tere bin",
+        "releaseYear": "2019-05-05",
+        "plot": "actions",
+        "poster": "efefujbvgj"
+    },
+    "updateMovie":{
+        "name": "Housefull 3",
+        "releaseYear": "2019-05-05",
+        "plot": "actions",
+        "poster": "efefujbvgj"
+    },
+    "updateActorMovie":{
+        "name": "sushant",
+        "sex": "male",
+        "dob": "2014-05-05",
+        "bio": "efefujbvgj"
+    },
+    "updateProducerMovie":{
+        "name": "Ganesh",
+        "sex": "male",
+        "dob": "2014-05-05",
+        "bio": "efefujbvgj"
+    }
+
+}
