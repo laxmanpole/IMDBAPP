@@ -1,7 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const swaggerUi = require('swagger-ui-express')
-// eslint-disable-next-line no-unused-vars
 const sequelize = require('../IMDBAPP/src/managers/sequelize.manager')
 const logger = require('../IMDBAPP/logger/logger')
 const SwaggerDocument = require('../IMDBAPP/src/swagger/swagger.json')

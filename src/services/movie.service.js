@@ -1,4 +1,3 @@
-/* eslint-disable consistent-return */
 const { movieModel } = require('../managers/sequelize.manager')
 const { actorModel } = require('../managers/sequelize.manager')
 const { producerModel } = require('../managers/sequelize.manager')

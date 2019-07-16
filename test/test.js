@@ -1,14 +1,11 @@
-/* eslint-disable import/order */
-/* eslint-disable no-unused-expressions */
+const fs = require('fs')
+const path = require('path')
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 const { describe, it } = require('mocha')
 const server = require('../server')
-const fs = require('fs')
-const path = require('path')
 
 chai.use(chaiHttp)
-// eslint-disable-next-line no-unused-vars
 const should = chai.should()
 function test() {
 	const testdata = fs.readFileSync(path.join(__dirname, '/test.json'))

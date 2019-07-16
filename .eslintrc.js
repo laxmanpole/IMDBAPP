@@ -55,6 +55,9 @@ module.exports = {
     "quote-props": ["error", "consistent"],
     'max-len': 0,
     'consistent-return': 0,
-    'no-else-return': 0
+    'no-else-return': 0,
+    "no-unused-vars": "off",
+    "no-unused-expressions": "off",
+    "consistent-return": "off"
 }
 };
