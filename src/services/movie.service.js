@@ -1,5 +1,4 @@
 /* eslint-disable consistent-return */
-/* eslint-disable camelcase */
 const { movieModel } = require('../managers/sequelize.manager')
 const { actorModel } = require('../managers/sequelize.manager')
 const { producerModel } = require('../managers/sequelize.manager')
@@ -21,7 +20,7 @@ const getMovie = async ({ movieId }) => {
 	try {
 		return await movieModel.findOne({
 			include: [{ all: true, nested: true }],
-			where: { id: movieId.id },
+			where: { id: movieId },
 		})
 	} catch (err) {
 		return err
@@ -37,11 +36,11 @@ const getMovies = async () => {
 }
 
 const updateMovieInfo = async ({
-	movieId, name, releaseYear, plot, producer_id, actor_id,
+	movieId, name, releaseYear, plot, producerId, actorId,
 }) => {
 	try {
 		const movieDetails = await movieModel.findOne({
-			where: { id: movieId.id },
+			where: { id: movieId },
 		})
 		if (!movieDetails) {
 			return new Error('not found')
@@ -50,10 +49,10 @@ const updateMovieInfo = async ({
 			name,
 			releaseYear,
 			plot,
-			actor_id,
-			producer_id,
+			actorId,
+			producerId,
 		}, {
-			where: { id: movieId.id },
+			where: { id: movieId },
 		})
 	} catch (err) {
 		return err
@@ -63,13 +62,13 @@ const updateMovieInfo = async ({
 const deleteMovie = async ({ movieId }) => {
 	try {
 		const movieDetails = await movieModel.findOne({
-			where: { id: movieId.id },
+			where: { id: movieId },
 		})
 		if (!movieDetails) {
 			throw new Error('not found')
 		}
 		return movieModel.destroy({
-			where: { id: movieId.id },
+			where: { id: movieId },
 		})
 	} catch (err) {
 		return err

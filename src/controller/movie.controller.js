@@ -1,11 +1,10 @@
-/* eslint-disable import/order */
+const async = require('async')
 const movieService = require('../services/movie.service')
 const movieValidation = require('../validation/movie.validation')
 const movieUpdation = require('../validation/movieUpdation')
 const updateValidation = require('../validation/actorupdate.validation')
 const idValidation = require('../validation/id.validation')
 const idsValidation = require('../validation/ids.validation')
-const async = require('async')
 
 const createMovie = async (req, res) => {
 	try {

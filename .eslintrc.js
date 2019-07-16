@@ -49,6 +49,8 @@ module.exports = {
     ],
     'no-tabs': ["error", { allowIndentationTabs: true }
     ],
+    "import/order": ["error", {"newlines-between": "never"}],
+    "camelcase": [2, {"properties": "never"}],
     'radix': ["error", "as-needed"],
     "quote-props": ["error", "consistent"],
     'max-len': 0,
