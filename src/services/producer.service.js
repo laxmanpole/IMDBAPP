@@ -1,10 +1,10 @@
-const { producerModel } = require('../managers/sequelize.manager')
+const { ProducerModel } = require('../managers/sequelize.manager')
 
 const addProducer = async ({
 	name, sex, dob, bio,
 }) => {
 	try {
-		return await producerModel.create({
+		return await ProducerModel.create({
 			name, sex, dob, bio,
 		})
 	} catch (err) {
@@ -14,7 +14,7 @@ const addProducer = async ({
 
 const getProducer = async ({ producerId }) => {
 	try {
-		return await producerModel.findOne({
+		return await ProducerModel.findOne({
 			where: { id: producerId },
 		})
 	} catch (err) {
@@ -26,7 +26,7 @@ const updateProducer = async ({
 	name, sex, dob, bio, producerId,
 }) => {
 	try {
-		return await producerModel.update({
+		return await ProducerModel.update({
 			name, sex, dob, bio,
 		}, {
 			where: { id: producerId },
@@ -38,13 +38,13 @@ const updateProducer = async ({
 
 const deleteProducer = async ({ producerId }) => {
 	try {
-		const producerData = await producerModel.findOne({
+		const producerData = await ProducerModel.findOne({
 			where: { id: producerId },
 		})
 		if (!producerData) {
 			throw new Error('not found')
 		} else {
-			return producerModel.destroy({
+			return ProducerModel.destroy({
 				where: { id: producerId },
 			})
 		}
@@ -55,7 +55,7 @@ const deleteProducer = async ({ producerId }) => {
 
 const getProducers = async () => {
 	try {
-		return await producerModel.findAll({})
+		return await ProducerModel.findAll({})
 	} catch (err) {
 		return err
 	}

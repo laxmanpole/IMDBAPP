@@ -1,10 +1,13 @@
-/* eslint-disable max-len */
 const Sequelize = require('sequelize')
-const actor = require('../model/actor.model')
-const movie = require('../model/movie.model')
+const Actor = require('../model/actor.model')
+const Comment = require('../model/comment.model')
+const Reply = require('../model/reply.model')
+const Reviewer = require('../model/reviewer.model')
+const Rating = require('../model/rating.model')
+const Movie = require('../model/movie.model')
 const producer = require('../model/producer.model')
-const actorMovie = require('../model/actorMovie.model')
-const producerMovie = require('../model/producermovie.model')
+const ActorMovie = require('../model/actorMovie.model')
+const ProducerMovie = require('../model/producermovie.model')
 const config = require('../config/config')
 
 const sequelize = new Sequelize(config.MYSQL_DB_NAME, config.MYSQL_USERNAME, config.MYSQL_PASSWORD, {
@@ -21,27 +24,38 @@ const sequelize = new Sequelize(config.MYSQL_DB_NAME, config.MYSQL_USERNAME, con
 
 })
 
-const actorModel = actor(sequelize, Sequelize)
-const movieModel = movie(sequelize, Sequelize)
-const producerModel = producer(sequelize, Sequelize)
-const actormovieModel = actorMovie(sequelize, Sequelize)
-const producerMovies = producerMovie(sequelize, Sequelize)
+const ActorModel = Actor(sequelize, Sequelize)
+const MovieModel = Movie(sequelize, Sequelize)
+const ProducerModel = producer(sequelize, Sequelize)
+const ActorMovieModel = ActorMovie(sequelize, Sequelize)
+const ProducerMovies = ProducerMovie(sequelize, Sequelize)
+const CommentModel = Comment(sequelize, Sequelize)
+const ReplyModel = Reply(sequelize, Sequelize)
+const ReviewerModel = Reviewer(sequelize, Sequelize)
+const RatingModel = Rating(sequelize, Sequelize)
 
-actorModel.hasMany(movieModel)
-movieModel.belongsToMany(actorModel, { through: actormovieModel })
-producerModel.hasMany(movieModel)
-movieModel.belongsToMany(producerModel, { through: producerMovies })
+MovieModel.belongsToMany(ActorModel, { through: ActorMovieModel })
+MovieModel.belongsToMany(ProducerModel, { through: ProducerMovies })
+ReviewerModel.hasMany(CommentModel)
+ReviewerModel.hasMany(ReplyModel)
+MovieModel.hasMany(CommentModel)
+CommentModel.hasMany(ReplyModel)
+MovieModel.hasMany(RatingModel)
+ReviewerModel.hasMany(RatingModel)
 
 sequelize.sync()
 	.then(() => {
-		// eslint-disable-next-line no-console
-		console.log('Database connected successfully!')
+		console.info('Database connected successfully!')
 	})
 
 module.exports = {
 	sequelize,
-	actorModel,
-	movieModel,
-	producerModel,
-	actormovieModel,
+	ActorModel,
+	MovieModel,
+	ProducerModel,
+	ActorMovieModel,
+	CommentModel,
+	ReplyModel,
+	ReviewerModel,
+	RatingModel,
 }

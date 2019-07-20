@@ -1,30 +1,20 @@
-module.exports = (sequelize, Sequelize) => sequelize.define('movies', {
+module.exports = (sequelize, Sequelize) => sequelize.define('users', {
 	id: {
 		type: Sequelize.INTEGER,
 		primaryKey: true,
 		autoIncrement: true,
 	},
-	name: {
+	firstname: {
 		type: Sequelize.STRING(255),
 		allowNull: true,
 		unique: true,
 	},
-	releaseYear: {
-		type: Sequelize.DATE(),
-		allowNull: false,
-	},
-	plot: {
+	lastname: {
 		type: Sequelize.STRING(255),
 		allowNull: false,
 	},
-	view: {
-		type: Sequelize.INTEGER,
-	},
-	poster: {
+	bio: {
 		type: Sequelize.STRING(255),
 		allowNull: true,
-	},
-	avgRating: {
-		type: Sequelize.INTEGER,
 	},
 })

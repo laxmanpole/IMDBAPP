@@ -23,7 +23,7 @@ app.listen(config.APP_PORT, config.APP_HOST, (err) => {
 })
 // when the server is shutting down, it emits a SIGTERM event. this lets us clean up connections etc.
 process.on('SIGTERM', () => {
-	console.log('Server shutting down!!')
+	console.info('Server shutting down!!')
 	process.exit(0)
 })
 

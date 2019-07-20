@@ -1,13 +1,14 @@
-const { movieModel } = require('../managers/sequelize.manager')
-const { actorModel } = require('../managers/sequelize.manager')
-const { producerModel } = require('../managers/sequelize.manager')
+const { MovieModel } = require('../managers/sequelize.manager')
+const { ActorModel } = require('../managers/sequelize.manager')
+const { ProducerModel } = require('../managers/sequelize.manager')
+const { RatingModel } = require('../managers/sequelize.manager')
 
 const addMovie = async ({
 	name, releaseYear, plot, poster,
 }) => {
 	try {
 		if (name && releaseYear && typeof plot !== 'undefined') {
-			return await movieModel.create({
+			return await MovieModel.create({
 				name, releaseYear, plot, poster,
 			})
 		}
@@ -17,10 +18,12 @@ const addMovie = async ({
 }
 const getMovie = async ({ movieId }) => {
 	try {
-		return await movieModel.findOne({
+		const movieDetails = await MovieModel.findOne({
 			include: [{ all: true, nested: true }],
 			where: { id: movieId },
 		})
+		movieDetails.view += 1
+		return movieDetails.save().then(movieDetail => movieDetail)
 	} catch (err) {
 		return err
 	}
@@ -28,7 +31,7 @@ const getMovie = async ({ movieId }) => {
 
 const getMovies = async () => {
 	try {
-		return await movieModel.findAll({ include: [{ all: true, nested: true }] })
+		return await MovieModel.findAll({ include: [{ all: true, nested: true }] })
 	} catch (err) {
 		return err
 	}
@@ -38,13 +41,13 @@ const updateMovieInfo = async ({
 	movieId, name, releaseYear, plot, producerId, actorId,
 }) => {
 	try {
-		const movieDetails = await movieModel.findOne({
+		const movieDetails = await MovieModel.findOne({
 			where: { id: movieId },
 		})
 		if (!movieDetails) {
 			return new Error('not found')
 		}
-		return await movieModel.update({
+		return await MovieModel.update({
 			name,
 			releaseYear,
 			plot,
@@ -60,13 +63,13 @@ const updateMovieInfo = async ({
 
 const deleteMovie = async ({ movieId }) => {
 	try {
-		const movieDetails = await movieModel.findOne({
+		const movieDetails = await MovieModel.findOne({
 			where: { id: movieId },
 		})
 		if (!movieDetails) {
 			throw new Error('not found')
 		}
-		return movieModel.destroy({
+		return MovieModel.destroy({
 			where: { id: movieId },
 		})
 	} catch (err) {
@@ -77,10 +80,10 @@ const updateActor = async ({
 	name, sex, dob, bio, movieId, actorId,
 }) => {
 	try {
-		const movieDetails = await movieModel.findOne({
+		const movieDetails = await MovieModel.findOne({
 			where: { id: movieId },
 			include: [{
-				model: actorModel,
+				model: ActorModel,
 				where: { id: actorId },
 			}],
 		})
@@ -88,7 +91,7 @@ const updateActor = async ({
 			throw new Error('not found')
 		} else {
 			if (parseInt(movieDetails.actors[0].id) === parseInt(actorId)) {
-				return await actorModel.update({
+				return await ActorModel.update({
 					name, sex, dob, bio,
 				}, {
 					where: {
@@ -105,10 +108,10 @@ const updateActor = async ({
 
 const deleteActor = async ({ movieId, actorId }) => {
 	try {
-		const movieDetails = await movieModel.findOne({
+		const movieDetails = await MovieModel.findOne({
 			where: { id: movieId },
 			include: [{
-				model: actorModel,
+				model: ActorModel,
 				where: { id: actorId },
 			}],
 		})
@@ -116,7 +119,7 @@ const deleteActor = async ({ movieId, actorId }) => {
 			throw new Error('not found')
 		} else {
 			if (parseInt(movieDetails.actors[0].id) === parseInt(actorId)) {
-				return await actorModel.destroy({
+				return await ActorModel.destroy({
 					where: {
 						id: actorId,
 					},
@@ -132,10 +135,10 @@ const updateProducer = async ({
 	name, sex, dob, bio, movieId, producerId,
 }) => {
 	try {
-		const movieDetails = await movieModel.findOne({
+		const movieDetails = await MovieModel.findOne({
 			where: { id: movieId },
 			include: [{
-				model: producerModel,
+				model: ProducerModel,
 				where: { id: producerId },
 			}],
 		})
@@ -143,7 +146,7 @@ const updateProducer = async ({
 			throw new Error('not found')
 		} else {
 			if (parseInt(movieDetails.producers[0].id) === parseInt(producerId)) {
-				return await producerModel.update({
+				return await ProducerModel.update({
 					name, sex, dob, bio,
 				}, {
 					where: {
@@ -160,10 +163,10 @@ const updateProducer = async ({
 
 const deleteProducer = async ({ movieId, producerId }) => {
 	try {
-		const movieDetails = await movieModel.findOne({
+		const movieDetails = await MovieModel.findOne({
 			where: { id: movieId },
 			include: [{
-				model: producerModel,
+				model: ProducerModel,
 				where: { id: producerId },
 			}],
 		})
@@ -171,7 +174,7 @@ const deleteProducer = async ({ movieId, producerId }) => {
 			throw new Error('not found')
 		} else {
 			if (parseInt(movieDetails.producers[0].id) === parseInt(producerId)) {
-				return await producerModel.destroy({
+				return await ProducerModel.destroy({
 					where: {
 						id: producerId,
 					},
@@ -185,9 +188,9 @@ const deleteProducer = async ({ movieId, producerId }) => {
 }
 
 const actorList = movieId => new Promise(((resolve, reject) => {
-	movieModel.findOne({
+	MovieModel.findOne({
 		include: [{
-			model: actorModel,
+			model: ActorModel,
 		}],
 		where: { id: movieId },
 	}).then((movieDetails) => {
@@ -198,9 +201,9 @@ const actorList = movieId => new Promise(((resolve, reject) => {
 }))
 
 const producerList = movieId => new Promise(((resolve, reject) => {
-	movieModel.findOne({
+	MovieModel.findOne({
 		include: [{
-			model: producerModel,
+			model: ProducerModel,
 		}],
 		where: { id: movieId },
 	}).then((movieDetails) => {
@@ -211,15 +214,15 @@ const producerList = movieId => new Promise(((resolve, reject) => {
 }))
 
 const updateView = movieId => new Promise(((resolve, reject) => {
-	movieModel.findOne({
+	MovieModel.findOne({
 		include: [{
-			model: actorModel,
+			model: ActorModel,
 		}],
 		where: { id: movieId },
 	}).then((movieDetails) => {
 		if (movieDetails) {
 			const count = movieDetails.view + 1
-			movieModel.update({ view: count }, {
+			MovieModel.update({ view: count }, {
 				where: {
 					id: movieId,
 				},
@@ -235,9 +238,9 @@ const updateView = movieId => new Promise(((resolve, reject) => {
 }))
 
 const viewDetails = movieId => new Promise(((resolve, reject) => {
-	movieModel.findOne({
+	MovieModel.findOne({
 		include: [{
-			model: actorModel,
+			model: ActorModel,
 		}],
 		where: { id: movieId },
 	}).then((movieDetails) => {
@@ -248,15 +251,15 @@ const viewDetails = movieId => new Promise(((resolve, reject) => {
 }))
 
 const updateMovieView = movieId => new Promise(((resolve, reject) => {
-	movieModel.findOne({
+	MovieModel.findOne({
 		include: [{
-			model: producerModel,
+			model: ProducerModel,
 		}],
 		where: { id: movieId },
 	}).then((movieDetails) => {
 		if (movieDetails) {
 			const count = movieDetails.view + 1
-			movieModel.update({ view: count + 1 }, {
+			MovieModel.update({ view: count + 1 }, {
 				where: {
 					id: movieId,
 				},
@@ -272,9 +275,9 @@ const updateMovieView = movieId => new Promise(((resolve, reject) => {
 }))
 
 const viewMovieDetails = movieId => new Promise(((resolve, reject) => {
-	movieModel.findOne({
+	MovieModel.findOne({
 		include: [{
-			model: producerModel,
+			model: ProducerModel,
 		}],
 		where: { id: movieId },
 	}).then((movieDetails) => {
@@ -283,6 +286,25 @@ const viewMovieDetails = movieId => new Promise(((resolve, reject) => {
 		reject(err)
 	})
 }))
+
+const getRating = async ({ movieId }) => {
+	try {
+		const ratingDetails = await MovieModel.findOne({
+			include: [{ model: RatingModel }],
+			where: { id: movieId },
+		})
+		const starDetails = ratingDetails.ratings.map(ratings => ratings.reviewStars)
+		let avgRating = 0
+		starDetails.forEach((reviewStars) => {
+			avgRating += reviewStars
+		})
+		avgRating /= starDetails.length
+		ratingDetails.avgRating = avgRating
+		return ratingDetails.save().then(movieDetails => movieDetails)
+	} catch (err) {
+		return err
+	}
+}
 
 const movieService = {
 	addMovie,
@@ -300,6 +322,7 @@ const movieService = {
 	updateView,
 	updateMovieView,
 	viewMovieDetails,
+	getRating,
 }
 
 module.exports = movieService

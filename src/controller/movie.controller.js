@@ -22,7 +22,9 @@ const createMovie = async (req, res) => {
 
 const getMovie = async (req, res) => {
 	try {
-		const movieId = await idValidation.validate(req.params, { abortEarly: false })
+		const validMovie = await idValidation.validate(req.params, { abortEarly: false })
+		const movieId = validMovie.id
+		console.log(movieId)
 		if (movieId) {
 			const movieDetail = await movieService.getMovie({
 				movieId,
@@ -255,6 +257,27 @@ const getAsyncMovieProducers = (req, res) => {
 	}
 }
 
+const getRating = async (req, res) => {
+	try {
+		const validMovie = await idValidation.validate(req.params, { abortEarly: false })
+		const movieId = validMovie.id
+		console.log(movieId)
+		if (movieId) {
+			const movieDetail = await movieService.getRating({
+				movieId,
+			})
+			if (!movieDetail) {
+				return res.status(404).send({ 'message': 'Not Found' })
+			} else {
+				return res.status(200).send(movieDetail)
+			}
+		}
+	} catch (err) {
+		return res.status(422).send(err.message)
+	}
+}
+
+
 const movieController = {
 	createMovie, // createMovie
 	getMovies, // getMovies
@@ -269,6 +292,7 @@ const movieController = {
 	getMovieProducers, // getProducers
 	getAsyncMovieActors, // getActors
 	getAsyncMovieProducers,
+	getRating,
 }
 
 module.exports = movieController

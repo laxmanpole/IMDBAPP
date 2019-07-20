@@ -1,10 +1,10 @@
-const { actorModel } = require('../managers/sequelize.manager')
+const { ActorModel } = require('../managers/sequelize.manager')
 
 const addActor = async ({
 	name, sex, dob, bio,
 }) => {
 	try {
-		return await actorModel.create({
+		return await ActorModel.create({
 			name, sex, dob, bio,
 		})
 	} catch (err) {
@@ -13,7 +13,7 @@ const addActor = async ({
 }
 const getActor = async ({ actorId }) => {
 	try {
-		return await actorModel.findOne({ where: { id: actorId } })
+		return await ActorModel.findOne({ where: { id: actorId } })
 	} catch (err) {
 		return err
 	}
@@ -24,7 +24,7 @@ const updateActor = async ({
 }) => {
 	console.log(actorId)
 	try {
-		return await actorModel.update({
+		return await ActorModel.update({
 			name, sex, dob, bio,
 		}, { where: { id: actorId } })
 	} catch (err) {
@@ -34,11 +34,11 @@ const updateActor = async ({
 
 const deleteActor = async ({ actorId }) => {
 	try {
-		const actorDetail = await actorModel.findOne({ where: { id: actorId } })
+		const actorDetail = await ActorModel.findOne({ where: { id: actorId } })
 		if (!actorDetail) {
 			throw new Error('Unable to find the actor')
 		} else {
-			return actorModel.destroy({ where: { id: actorId } })
+			return ActorModel.destroy({ where: { id: actorId } })
 		}
 	} catch (err) {
 		return err
@@ -47,7 +47,7 @@ const deleteActor = async ({ actorId }) => {
 
 const getActors = async () => {
 	try {
-		return await actorModel.findAll({})
+		return await ActorModel.findAll({})
 	} catch (err) {
 		return err
 	}

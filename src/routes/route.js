@@ -2,6 +2,9 @@ const express = require('express')
 const actorController = require('../controller/actor.controller')
 const movieController = require('../controller/movie.controller')
 const producerController = require('../controller/producer.controller')
+const reviewerController = require('../controller/reviewer.controller')
+const commentController = require('../controller/comment.controller')
+const replyController = require('../controller/reply.controller')
 
 const routes = express.Router({})
 
@@ -35,5 +38,12 @@ routes.get('/movie/:id/producers', movieController.getMovieProducers)
 // Async Parallel
 routes.get('/movie/:id/actorList', movieController.getAsyncMovieActors)
 routes.get('/movie/:id/producerList', movieController.getAsyncMovieProducers)
+
+routes.post('/reviewer', reviewerController.createReviewer)
+routes.post('/movie/:id/comment', commentController.createComment)
+routes.delete('/movie/:movieId/comment/:commentId', commentController.deleteComment)
+routes.post('/movie/:movieId/comment/:commentId/reply', replyController.createReply)
+routes.delete('/movie/:movieId/comment/:commentId/reply/:replyId', replyController.deleteReply)
+routes.get('/movie/:id/rating', movieController.getRating)
 
 module.exports = routes
