@@ -15,6 +15,7 @@ const getActor = async ({ actorId }) => {
 	try {
 		return await ActorModel.findOne({ where: { id: actorId } })
 	} catch (err) {
+		console.log(err instanceof TypeError)
 		return err
 	}
 }

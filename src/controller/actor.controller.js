@@ -32,6 +32,7 @@ const getActor = async (req, res) => {
 			}
 		}
 	} catch (err) {
+		// console.log(err instanceof TypeError)
 		return res.status(422).send(err.message)
 	}
 }

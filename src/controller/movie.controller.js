@@ -5,6 +5,7 @@ const movieUpdation = require('../validation/movieUpdation')
 const updateValidation = require('../validation/actorupdate.validation')
 const idValidation = require('../validation/id.validation')
 const idsValidation = require('../validation/ids.validation')
+const starsValidation = require('../validation/rating.validation')
 
 const createMovie = async (req, res) => {
 	try {
@@ -24,21 +25,85 @@ const getMovie = async (req, res) => {
 	try {
 		const validMovie = await idValidation.validate(req.params, { abortEarly: false })
 		const movieId = validMovie.id
-		console.log(movieId)
-		if (movieId) {
-			const movieDetail = await movieService.getMovie({
-				movieId,
-			})
-			if (!movieDetail) {
+		async.parallel([
+			function movieDetail(callback) {
+				if (movieId) {
+					movieService
+						.getMovie({ movieId })
+						.then(movieInfo => callback(null, movieInfo))
+						.catch(err => callback(err))
+				}
+			},
+			function reviewerDetails(callback) {
+				movieService
+					.getReviewers({})
+					.then(reviewerinfo => callback(null, reviewerinfo))
+					.catch(err => callback(err))
+			},
+		], (err, result) => {
+			if (err) {
 				return res.status(404).send({ 'message': 'Not Found' })
 			} else {
-				return res.status(200).send(movieDetail)
+				return res.status(200).send(result)
 			}
-		}
+		})
 	} catch (err) {
 		return res.status(422).send(err.message)
 	}
 }
+
+const getMovieInfo = async (req, res) => {
+	try {
+		const validMovie = await idValidation.validate(req.params, { abortEarly: false })
+		const movieId = validMovie.id
+		// Note: Why waterfall is required?
+		async.waterfall([
+			function movieDetail(callback) {
+				if (movieId) {
+					movieService.getMovie({
+						movieId,
+					}).then((movieInfo) => {
+						// console.log(typeof movieInfo)
+						callback(null, movieInfo)
+					}).then((err) => {
+					// console.log(err instanceof TypeError)
+						callback(err)
+					})
+				}
+			},
+		], (err, result) => {
+			if (err) {
+				console.log(err instanceof TypeError)
+				return res.status(404).send({ 'message': 'Not Found' })
+			} else {
+				return res.status(200).send(result)
+			}
+		})
+	} catch (err) {
+		console.log(typeof err)
+		return res.status(422).send(err.message)
+	}
+}
+
+// const getMovie = async (req, res) => {
+// try {
+// const validMovie = await idValidation.validate(req.params, { abortEarly: false })
+// const movieId = validMovie.id
+
+// if (movieId) {
+// const movieDetail = await movieService.getMovie({
+// movieId,
+// })
+// if (!movieDetail) {
+// return res.status(404).send({ 'message': 'Not Found' })
+// } else {
+// return res.status(200).send(movieDetail)
+// }
+// }
+// } catch (err) {
+// return res.status(422).send(err.message)
+// }
+// }
 
 const getMovies = async (req, res) => {
 	try {
@@ -257,6 +322,26 @@ const getAsyncMovieProducers = (req, res) => {
 	}
 }
 
+const createRating = async (req, res) => {
+	try {
+		const validMovie = await idsValidation.validate(req.params, { abortEarly: false })
+		const { movieId } = validMovie
+		const { reviewStars, reviewerId } = await starsValidation.validate(req.body, { abortEarly: false })
+		if (movieId && reviewerId) {
+			const movieDetail = await movieService.createRating({
+				movieId, reviewerId, reviewStars,
+			})
+			if (!movieDetail) {
+				return res.status(404).send({ 'message': 'Not Found' })
+			} else {
+				return res.status(200).send(movieDetail)
+			}
+		}
+	} catch (err) {
+		return res.status(422).send(err.message)
+	}
+}
+
 const getRating = async (req, res) => {
 	try {
 		const validMovie = await idValidation.validate(req.params, { abortEarly: false })
@@ -293,6 +378,8 @@ const movieController = {
 	getAsyncMovieActors, // getActors
 	getAsyncMovieProducers,
 	getRating,
+	createRating,
+	getMovieInfo,
 }
 
 module.exports = movieController

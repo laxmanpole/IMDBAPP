@@ -22,7 +22,10 @@ routes.delete('/producer/:id', producerController.deleteProducer)
 
 routes.post('/movie', movieController.createMovie)
 routes.put('/movie/:id/', movieController.updateMovie)
+// parallel
 routes.get('/movie/:id/', movieController.getMovie)
+// waterfall
+routes.get('/movie/:id/waterfall', movieController.getMovieInfo)
 routes.get('/movies', movieController.getMovies)
 routes.delete('/movie/:id/', movieController.deleteMovie)
 
@@ -44,6 +47,7 @@ routes.post('/movie/:id/comment', commentController.createComment)
 routes.delete('/movie/:movieId/comment/:commentId', commentController.deleteComment)
 routes.post('/movie/:movieId/comment/:commentId/reply', replyController.createReply)
 routes.delete('/movie/:movieId/comment/:commentId/reply/:replyId', replyController.deleteReply)
+routes.post('/movie/:movieId/rating', movieController.createRating)
 routes.get('/movie/:id/rating', movieController.getRating)
 
 module.exports = routes

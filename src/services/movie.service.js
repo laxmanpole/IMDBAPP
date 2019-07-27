@@ -2,6 +2,8 @@ const { MovieModel } = require('../managers/sequelize.manager')
 const { ActorModel } = require('../managers/sequelize.manager')
 const { ProducerModel } = require('../managers/sequelize.manager')
 const { RatingModel } = require('../managers/sequelize.manager')
+const { ReviewerModel } = require('../managers/sequelize.manager')
+
 
 const addMovie = async ({
 	name, releaseYear, plot, poster,
@@ -22,9 +24,16 @@ const getMovie = async ({ movieId }) => {
 			include: [{ all: true, nested: true }],
 			where: { id: movieId },
 		})
+		// const movieDetails = await MovieModel.findOne({
+		// include: [{ model: ActorModel }, { model: ProducerModel }, {
+		// model: CommentModel, include: [{ model: ReplyModel }],
+		// }, { model: RatingModel }],
+		// where: { id: movieId },
+		// })
 		movieDetails.view += 1
 		return movieDetails.save().then(movieDetail => movieDetail)
 	} catch (err) {
+		console.log(err instanceof TypeError)
 		return err
 	}
 }
@@ -287,20 +296,48 @@ const viewMovieDetails = movieId => new Promise(((resolve, reject) => {
 	})
 }))
 
+const createRating = async ({ movieId, reviewerId, reviewStars }) => {
+	try {
+		const createdRatingDetails = await RatingModel.create({
+			movie_id: movieId, reviewer_id: reviewerId, reviewStars,
+		})
+		if (!createdRatingDetails) {
+			throw new Error('rating not found')
+		} else {
+			const movieDetails = await MovieModel.findOne({
+				include: [{ model: RatingModel }],
+				where: { id: movieId },
+			})
+			const starDetails = movieDetails.ratings.map(ratings => ratings.reviewStars)
+			let avgRating = 0
+			starDetails.forEach((Stars) => {
+				avgRating += Stars
+			})
+			avgRating /= starDetails.length
+			movieDetails.avgRating = avgRating
+			movieDetails.view += 1
+			return movieDetails.save().then(ratingDetails => ratingDetails)
+		}
+	} catch (err) {
+		return err
+	}
+}
+
 const getRating = async ({ movieId }) => {
 	try {
 		const ratingDetails = await MovieModel.findOne({
 			include: [{ model: RatingModel }],
 			where: { id: movieId },
 		})
-		const starDetails = ratingDetails.ratings.map(ratings => ratings.reviewStars)
-		let avgRating = 0
-		starDetails.forEach((reviewStars) => {
-			avgRating += reviewStars
-		})
-		avgRating /= starDetails.length
-		ratingDetails.avgRating = avgRating
-		return ratingDetails.save().then(movieDetails => movieDetails)
+		return ratingDetails
+	} catch (err) {
+		return err
+	}
+}
+
+const getReviewers = async () => {
+	try {
+		return await ReviewerModel.findAll({})
 	} catch (err) {
 		return err
 	}
@@ -322,7 +359,9 @@ const movieService = {
 	updateView,
 	updateMovieView,
 	viewMovieDetails,
+	createRating,
 	getRating,
+	getReviewers,
 }
 
 module.exports = movieService

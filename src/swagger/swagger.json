@@ -509,7 +509,7 @@
                 "tags": [
                     "movie"
                 ],
-                "summary": "Updated movie",
+                "summary": "Deleted movie",
                 "description": "This can only be done by the logged in user.",
                 "produces": [
                     "application/json"
